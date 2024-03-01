@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <!--
+    SPDX-FileCopyrightText: Sander Baas <sander@baasmail.nl>
+    SPDX-License-Identifier: CC0-1.0
+    -->
+    <id>calendarreminder</id>
+    <name>Calendar Reminder</name>
+    <summary>Send daily or weekly calendar reminders</summary>
+    <description><![CDATA[Send a reminder every day and/or once a week for upcoming calendar events. Also send an email alert when an event has been added, updated or deleted.]]></description>
+    <version>0.0.1</version>
+    <licence>agpl</licence>
+    <author mail="sander@baasmail.nl" >Sander Baas</author>
+    <namespace>CalendarReminder</namespace>
+    <category>tools</category>
+    <bugs>https://github.com/sanderbaas/nextcloud-calendar-reminder/issues</bugs>
+    <dependencies>
+        <nextcloud min-version="27" max-version="27"/>
+    </dependencies>
+    <navigations>
+        <navigation>
+            <name>Calendar Reminder</name>
+            <route>calendarreminder.page.index</route>
+        </navigation>
+    </navigations>
+</info>

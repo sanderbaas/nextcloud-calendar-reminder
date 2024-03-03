@@ -1,10 +1,10 @@
 <template>
 	<NcContent app-name="calendarreminder">
-		<MyNavigation />
+		<Navigation />
 		<NcAppContent>
-			<MyMainContent v-if="true" />
+			<MainContent v-if="false" />
 			<NcEmptyContent v-else
-				:title="t('tutorial_5', 'Select a note')">
+				:title="t('calendarreminder', 'Select a reminder to see a preview')">
 				<template #icon>
 					<NoteIcon :size="20" />
 				</template>
@@ -20,15 +20,10 @@ import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 
 import NoteIcon from '../components/icons/NoteIcon.vue'
 
-import MyNavigation from '../components/MyNavigation.vue'
-import MyMainContent from '../components/MyMainContent.vue'
+import Navigation from '../components/Navigation.vue'
+import MainContent from '../components/MainContent.vue'
 
-// import axios from '@nextcloud/axios'
-// import { generateOcsUrl, generateUrl } from '@nextcloud/router'
-// import { showSuccess, showError, showUndo } from '@nextcloud/dialogs'
 // import { loadState } from '@nextcloud/initial-state'
-
-// import { Timer } from '../utils.js'
 
 export default {
 	name: 'App',
@@ -38,8 +33,8 @@ export default {
 		NcContent,
 		NcAppContent,
 		NcEmptyContent,
-		MyMainContent,
-		MyNavigation,
+		MainContent,
+		Navigation,
 	},
 
 	props: {

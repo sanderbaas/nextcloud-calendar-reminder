@@ -6,10 +6,10 @@ declare(strict_types=1);
 
 namespace OCA\CalendarReminder\Tests\Unit\Service;
 
-use OCA\CalendarReminder\Db\Note;
-use OCA\CalendarReminder\Db\NoteMapper;
+use OCA\CalendarReminder\Db\Reminder;
+use OCA\CalendarReminder\Db\ReminderMapper;
 
-use OCA\CalendarReminder\Service\NoteNotFound;
+use OCA\CalendarReminder\Service\ReminderNotFound;
 
 use OCA\CalendarReminder\Service\NoteService;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -21,7 +21,7 @@ class NoteServiceTest extends TestCase {
 	private $mapper;
 
 	public function setUp(): void {
-		$this->mapper = $this->getMockBuilder(NoteMapper::class)
+		$this->mapper = $this->getMockBuilder(ReminderMapper::class)
 			->disableOriginalConstructor()
 			->getMock();
 		$this->service = new NoteService($this->mapper);
@@ -29,7 +29,7 @@ class NoteServiceTest extends TestCase {
 
 	public function testUpdate(): void {
 		// the existing note
-		$note = Note::fromRow([
+		$note = Reminder::fromRow([
 			'id' => 3,
 			'title' => 'yo',
 			'content' => 'nope'
@@ -40,7 +40,7 @@ class NoteServiceTest extends TestCase {
 			->will($this->returnValue($note));
 
 		// the note when updated
-		$updatedNote = Note::fromRow(['id' => 3]);
+		$updatedNote = Reminder::fromRow(['id' => 3]);
 		$updatedNote->setTitle('title');
 		$updatedNote->setContent('content');
 		$this->mapper->expects($this->once())
@@ -54,7 +54,7 @@ class NoteServiceTest extends TestCase {
 	}
 
 	public function testUpdateNotFound(): void {
-		$this->expectException(NoteNotFound::class);
+		$this->expectException(ReminderNotFound::class);
 		// test the correct status code if no note is found
 		$this->mapper->expects($this->once())
 			->method('find')

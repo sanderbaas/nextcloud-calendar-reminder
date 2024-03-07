@@ -8,7 +8,7 @@ namespace OCA\CalendarReminder\Tests\Unit\Controller;
 
 use OCA\CalendarReminder\Controller\NoteController;
 
-use OCA\CalendarReminder\Service\NoteNotFound;
+use OCA\CalendarReminder\Service\ReminderNotFound;
 use OCA\CalendarReminder\Service\NoteService;
 
 use OCP\AppFramework\Http;
@@ -49,7 +49,7 @@ class NoteControllerTest extends TestCase {
 		// test the correct status code if no note is found
 		$this->service->expects($this->once())
 			->method('update')
-			->will($this->throwException(new NoteNotFound()));
+			->will($this->throwException(new ReminderNotFound()));
 
 		$result = $this->controller->update(3, 'title', 'content');
 

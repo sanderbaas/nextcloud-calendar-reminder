@@ -117,6 +117,7 @@ export default {
 		},
 	},
 	beforeMount() {
+		this.setReminders()
 	},
 	methods: {
 		onCreate(value) {

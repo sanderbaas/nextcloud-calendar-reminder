@@ -8,7 +8,7 @@ namespace OCA\CalendarReminder\Controller;
 
 use Closure;
 
-use OCA\CalendarReminder\Service\NoteNotFound;
+use OCA\CalendarReminder\Service\ReminderNotFound;
 use OCP\AppFramework\Http;
 
 use OCP\AppFramework\Http\DataResponse;
@@ -17,7 +17,7 @@ trait Errors {
 	protected function handleNotFound(Closure $callback): DataResponse {
 		try {
 			return new DataResponse($callback());
-		} catch (NoteNotFound $e) {
+		} catch (ReminderNotFound $e) {
 			$message = ['message' => $e->getMessage()];
 			return new DataResponse($message, Http::STATUS_NOT_FOUND);
 		}

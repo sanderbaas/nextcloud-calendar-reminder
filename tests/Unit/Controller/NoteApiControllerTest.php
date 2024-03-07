@@ -6,11 +6,11 @@ declare(strict_types=1);
 
 namespace OCA\CalendarReminder\Tests\Unit\Controller;
 
-use OCA\CalendarReminder\Controller\NoteApiController;
+use OCA\CalendarReminder\Controller\ReminderApiController;
 
 class NoteApiControllerTest extends NoteControllerTest {
 	public function setUp(): void {
 		parent::setUp();
-		$this->controller = new NoteApiController($this->request, $this->service, $this->userId);
+		$this->controller = new ReminderApiController($this->request, $this->service, $this->userId);
 	}
 }

@@ -9,7 +9,7 @@
     <name>Calendar Reminder</name>
     <summary>Send daily or weekly calendar reminders</summary>
     <description><![CDATA[Send a reminder every day and/or once a week for upcoming calendar events. Also send an email alert when an event has been added, updated or deleted.]]></description>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <licence>agpl</licence>
     <author mail="sander@baasmail.nl" >Sander Baas</author>
     <namespace>CalendarReminder</namespace>

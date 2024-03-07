@@ -8,6 +8,7 @@ namespace OCA\CalendarReminder\Controller;
 
 use OCA\CalendarReminder\AppInfo\Application;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\Util;
@@ -21,9 +22,14 @@ class PageController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function index(): TemplateResponse {
-		Util::addScript(Application::APP_ID, 'calendarreminder-main');
+	public function index(): TemplateResponse
+    {
+        Util::addScript(Application::APP_ID, 'calendarreminder-main');
+        return new TemplateResponse(Application::APP_ID, 'main');
+    }
 
-		return new TemplateResponse(Application::APP_ID, 'main');
-	}
+    public function show(): DataResponse
+    {
+        return json_encode([]);
+    }
 }

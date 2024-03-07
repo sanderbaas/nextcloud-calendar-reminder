@@ -14,12 +14,11 @@ declare(strict_types=1);
  */
 return [
 	'resources' => [
-		'note' => ['url' => '/notes'],
-		'note_api' => ['url' => '/api/0.1/notes']
+		'reminder_api' => ['url' => '/api/v1/reminders']
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-		['name' => 'note_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+		['name' => 'reminder_api#preflighted_cors', 'url' => '/api/v1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']]
 	]
 ];

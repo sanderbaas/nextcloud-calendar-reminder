@@ -66,7 +66,7 @@ class ReminderApiController extends ApiController {
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function update(int $id, string $name, string $type, string $firstTimeAt, string $customInterval): DataResponse {
+	public function update(int $id, string $name, string $type = 'daily', string $firstTimeAt = 'now', string $customInterval = ''): DataResponse {
 		return $this->handleNotFound(function () use ($id, $name, $type, $firstTimeAt, $customInterval) {
 			return $this->service->update($id, $name, $type, $firstTimeAt, $customInterval, $this->userId);
 		});

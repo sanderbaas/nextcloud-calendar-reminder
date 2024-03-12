@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import Reminder from './models/reminder.js'
 
 export const store = Vue.observable({
 	reminders: [],
@@ -14,7 +15,9 @@ export const store = Vue.observable({
 export const mutations = {
 	async setReminders() {
 		const response = await axios.get(generateUrl('/apps/calendarreminder/api/v1/reminders'))
-		store.reminders = response.data
+		response.data.forEach(function(data) {
+			store.reminders.push(new Reminder(data))
+		})
 	},
 
 	async setCurrentUser() {
@@ -24,8 +27,7 @@ export const mutations = {
 
 	async createReminder(reminder) {
 		const response = await axios.post(generateUrl('/apps/calendarreminder/api/v1/reminders'), reminder)
-		store.reminders.push(response.data)
-		// store.reminders.push(reminder)
+		store.reminders.push(new Reminder(response.data))
 	},
 
 	async updateReminder(reminder) {

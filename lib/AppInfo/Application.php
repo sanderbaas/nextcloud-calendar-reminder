@@ -25,6 +25,7 @@ class Application extends App implements IBootstrap {
 		 * https://docs.nextcloud.com/server/latest/developer_manual/app_development/bootstrap.html
 		 */
 		// Register your services, event listeners, etc.
+        include_once __DIR__ . '/../../vendor/autoload.php';
 	}
 
 	public function boot(IBootContext $context): void {

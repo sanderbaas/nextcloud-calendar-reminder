@@ -13,12 +13,18 @@ use OCA\CalendarReminder\Db\ReminderMapper;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\IUserSession;
 
 class ReminderService {
 	private ReminderMapper $mapper;
+    private IUserSession $userSession;
 
-	public function __construct(ReminderMapper $mapper) {
+    public function __construct(
+        ReminderMapper $mapper,
+        IUserSession $userSession
+    ) {
 		$this->mapper = $mapper;
+        $this->userSession = $userSession;
 	}
 
 	/**

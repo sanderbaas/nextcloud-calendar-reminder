@@ -6,20 +6,53 @@ declare(strict_types=1);
 
 namespace OCA\CalendarReminder\Db;
 
+use Carbon\Carbon;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\IConfig;
 use OCP\IDBConnection;
+use OCP\IUserSession;
 
 /**
  * @template-extends QBMapper<Reminder>
  */
 class ReminderMapper extends QBMapper {
-	public function __construct(IDBConnection $db) {
+    private IUserSession $userSession;
+    private IConfig $config;
+    private ?\OCP\IUser $currentUser;
+
+    public function __construct(
+        IDBConnection $db,
+        IUserSession $userSession,
+        IConfig $config
+    ) {
+        $this->userSession = $userSession;
+        $this->config = $config;
+        $this->currentUser = $userSession->getUser();
+
 		parent::__construct($db, 'cr24_reminders', Reminder::class);
 	}
 
-	/**
+    protected function mapRowToEntity(array $row): \OCP\AppFramework\Db\Entity
+    {
+        $defaultTimeZone = date_default_timezone_get();
+        $userTimezone = $this->config->getUserValue(
+            $this->currentUser->getUID(),
+            'core',
+            'timezone',
+            $defaultTimeZone
+        );
+
+        $reminder = parent::mapRowToEntity($row);
+        $reminder->setFirstTimeAt(Carbon::parse($reminder->getFirstTimeAt())
+            ->setTimezone($userTimezone)
+            ->isoFormat('YYYY-MM-DD HH:mm:ss'));
+
+        return $reminder;
+    }
+
+    /**
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */

@@ -6,9 +6,12 @@ declare(strict_types=1);
 
 namespace OCA\CalendarReminder\Db;
 
+use Carbon\Carbon;
 use JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
+use OCP\IConfig;
+use OCP\IUserSession;
 
 /**
  * @method getId(): int
@@ -16,7 +19,7 @@ use OCP\AppFramework\Db\Entity;
  * @method setName(string $name): void
  * @method getType(): string
  * @method setType(string $type): void
- * @method getFirstTimeAt(): dateTime
+ * @method getFirstTimeAt(): string
  * @method setFirstTimeAt(string $firstTimeAt): void
  * @method getCustomInterval(): string
  * @method setCustomInterval(string $customInterval): void
@@ -30,8 +33,8 @@ class Reminder extends Entity implements JsonSerializable {
 	protected ?string $firstTimeAt = null;
 	protected ?string $customInterval = null;
 
-	public function jsonSerialize(): array {
-		return [
+    public function jsonSerialize(): array {
+        return [
 			'id' => $this->id,
 			'name' => $this->name,
 			'type' => $this->type,

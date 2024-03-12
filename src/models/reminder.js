@@ -18,11 +18,22 @@ export default class Reminder {
 		data ??= {}
 		this.id = data.id
 		this.name = data.name
+		this.type = data.type
+		this.firstTimeAt = new Date(data.firstTimeAt)
+		this.customInterval = data.customInterval
 	}
 
 	static createDefault() {
+		const firstTimeAt = new Date()
+		firstTimeAt.setMinutes(0)
+		firstTimeAt.setSeconds(0)
+		firstTimeAt.setMilliseconds(0)
+
 		return new Reminder({
-			name: '',
+			name: t('calendarreminder', 'New reminder'),
+			type: 'daily',
+			firstTimeAt,
+			customInterval: '',
 		})
 
 	}

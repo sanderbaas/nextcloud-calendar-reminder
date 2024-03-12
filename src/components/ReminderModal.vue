@@ -26,10 +26,16 @@
 					</div>
 					<div class="reminder-config-modal__form__row">
 						<label for="firstTimeAtField">First time at</label>
-						<NcTextField id="firstTimeAtField"
+						<br>
+						<NcDatetimePicker id="firstTimeAtField"
+							v-model="editing.firstTimeAt"
+							type="datetime"
+							:formatter="pickerFormat"
+							confirm
+							:show-second="false"
+							:minute-step="1"
 							:label="t('calendarreminder', 'First time at')"
-							:label-outside="true"
-							:value.sync="editing.firstTimeAt" />
+							:label-outside="true" />
 					</div>
 					<div class="reminder-config-modal__form__row">
 						<label for="customIntervalField">Custom interval</label>
@@ -51,19 +57,23 @@
 </template>
 
 <script>
-import { NcModal as Modal, NcButton, NcTextField } from '@nextcloud/vue'
+import { NcModal as Modal, NcButton, NcTextField, NcDatetimePicker } from '@nextcloud/vue'
 // import TextInput from './TextInput.vue'
 import Confirmation from './Confirmation.vue'
 import Reminder from '../models/reminder.js'
 import { mutations } from '../store.js'
 import { showError } from '@nextcloud/dialogs'
-// showSuccess
+import moment from 'moment'
+import { getLocale } from '@nextcloud/l10n'
+
+moment.locale(getLocale())
 
 export default {
 	name: 'ReminderModal',
 	components: {
 		Modal,
 		NcTextField,
+		NcDatetimePicker,
 		Confirmation,
 		NcButton,
 	},
@@ -85,6 +95,20 @@ export default {
 			enableFutureLimit: false,
 			rateLimitingReached: false,
 			showConfirmation: false,
+			pickerFormat: {
+				// [optional] Date to String
+				stringify: (date) => {
+					return date ? moment(date).format('LLL') : ''
+				},
+				// [optional]  String to Date
+				parse: (value) => {
+					return value ? moment(value, 'LLL').toDate() : null
+				},
+				// [optional] getWeekNumber
+				getWeek: (date) => {
+					 // a number
+				},
+			},
 		}
 	},
 	computed: {
@@ -103,11 +127,7 @@ export default {
 			return t('calendarreminder', 'Update')
 		},
 		defaultReminder() {
-			return Reminder.createDefault(
-				// this.calendarUrlToUri(this.$store.getters.ownSortedCalendars[0].url),
-				// this.$store.getters.scheduleInbox,
-				// this.$store.getters.getResolvedTimezone,
-			)
+			return Reminder.createDefault()
 		},
 	},
 	watch: {
@@ -174,5 +194,10 @@ fieldset {
 
 .reminder-modal__submit-button {
 	margin-top: 20px;
+}
+</style>
+<style lang="scss">
+.modal-wrapper .modal-container {
+	overflow: visible!important;
 }
 </style>
